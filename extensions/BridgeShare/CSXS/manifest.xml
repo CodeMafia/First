@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtensionManifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ExtensionBundleId="com.adobe.BridgeShare" ExtensionBundleVersion="1.0" Version="7.0"> <!-- MAJOR-VERSION-UPDATE-MARKER -->
+    <ExtensionList>
+        <Extension Id="BridgeShare" Version="1.0"/>          
+    </ExtensionList>
+    <ExecutionEnvironment>
+        <HostList>
+            <Host Name="KBRG" Version="[8.0,99.99]" />
+        </HostList>
+        <LocaleList>
+            <Locale Code="All"/>
+        </LocaleList>
+        <RequiredRuntimeList>
+            <RequiredRuntime Name="CSXS" Version="7.0"/> <!-- MAJOR-VERSION-UPDATE-MARKER -->
+        </RequiredRuntimeList>
+    </ExecutionEnvironment>
+    <DispatchInfoList>      
+        <Extension Id="BridgeShare">
+            <DispatchInfo>
+                <Resources>
+                    <MainPath>./html/index.html</MainPath>		
+					<ScriptPath>./jsx/BridgeLib.jsx</ScriptPath>
+                </Resources>
+                <Lifecycle>
+                    <AutoVisible>true</AutoVisible>
+                </Lifecycle>
+                <UI>
+                    <Type>Embedded</Type>
+                    <Menu>Share on Facebook</Menu>                   
+                </UI>
+            </DispatchInfo>
+        </Extension>
+    </DispatchInfoList>
+</ExtensionManifest>

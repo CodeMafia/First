@@ -1,0 +1,196 @@
+<!doctype html>
+
+<html>
+<head>
+<meta charset="utf-8">
+
+<style>
+body
+{
+    background-color : #f5f5f5;
+	overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+
+.container {
+    text-align: center;
+    margin-top: 20px;
+
+    font-family: Helvetica;
+	min-width: 400px;
+	
+}
+
+
+
+.loginBtn {
+  box-sizing: border-box;
+  position: relative;
+  width: 15em; 
+  margin: 0.2em;
+  padding: 0 15px 0 46px;
+  border: none;
+  text-align: left;
+  line-height: 34px;
+  white-space: nowrap;
+  border-radius: 0.2em;
+  font-size: 16px;
+  color: #FFF;
+}
+.loginBtn:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 100%;
+}
+.loginBtn:focus {
+  outline: none;
+}
+.loginBtn:active {
+  box-shadow: inset 0 0 0 32px rgba(0,0,0,0.1);
+}
+
+
+
+.loginBtn--facebook {
+ margin-top : 16px;
+  background-color: #4C69BA;
+  background-image: linear-gradient(#4C69BA, #3B55A0);
+  /*font-family: "Helvetica neue", Helvetica Neue, Helvetica, Arial, sans-serif;*/
+  text-shadow: 0 -1px 0 #354C8C;
+}
+.loginBtn--facebook:before {
+  border-right: #364e92 1px solid;
+  background: url('../asset/icon_facebook.png') 6px 6px no-repeat;
+}
+.loginBtn--facebook:hover,
+.loginBtn--facebook:focus {
+  background-color: #5B7BD5;
+  background-image: linear-gradient(#5B7BD5, #4864B1);
+}
+
+/* The alert message box */
+.alert {
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+}
+
+/* The close button */
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+    color: black;
+}
+
+.text
+{
+font-size: 18px;
+font-weight : Light;
+font-family: "Adobe Clean", "Helvetica","Arial";
+color : #2C2C2C;   
+margin-left: 20px;
+margin-right : 20px;
+}
+</style>
+
+
+<script src="../js/jquery-3.1.1.min.js"></script>
+<script src="../js/CSInterface.js"></script>
+
+
+
+<script>
+
+/**
+ * Converts a RAW file to JPEG after validation 
+ * @param fileId id of the RAW file which needs to be converted to JPEG
+ * @param filePath Path of the file in local file system which needs to be converted to JPEG
+ *
+ * @return status of conversion, Id of file and path of converted file seperated by '$ sign 
+ *         eg. 'Success$123445$C:\Converted\File.jpg 
+ *			   'Failure$123456$Can not create Folder
+ */
+$.ajaxSetup({timeout:5000});
+
+
+/**
+ * Calls the HealthCheck light api on the server
+ * If it returns anything other than 200, Error response is shown
+ * When successful response is received, it will redirect to the app login page
+ */
+function CheckServerHealth()
+{
+	$.get("http://bridgecep-env.us-west-2.elasticbeanstalk.com/healthcheck", function(data) {           
+	}).done(function()
+	{
+	   window.location.href='http://bridgecep-env.us-west-2.elasticbeanstalk.com/login';
+	}).fail(function(data, textStatus, xhr) {
+		$('#alertboxServer').show();
+	});
+}
+
+
+/**
+ * Checks for Internet connectivity and redirects to HealthCheck method
+ * If No network found, error message is shown
+*/
+function Login()
+{
+	if(navigator.onLine === false)
+	{
+		$('#alertboxNetwork').show();	
+	}
+	else
+	{
+		CheckServerHealth();
+	}	
+}
+
+
+
+</script>
+</head>
+<body ondrop='return false;' ondragend='return false;' ondragover='return false;' ondragleave='return false;'>
+<div class="container">
+<img src="../asset/appIcon.png" />
+
+<p class='text'> Upload your Photos on Facebook timeline or albums directly from Adobe Bridge with JPEG conversion </p>
+
+<div id='alertboxNetwork' class="alert" style='display:none;'>
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  No Internet Connection.
+</div>
+
+<div id='alertboxServer' class="alert" style='display:none;'>
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+ Unable to connect to Photo Upload Service.
+</div>
+
+<button class="loginBtn loginBtn--facebook" onclick='Login()'  alt='Continue with facebook'>
+  Continue with Facebook
+</button>
+
+
+</div>
+
+
+
+
+</body>
+</html>
